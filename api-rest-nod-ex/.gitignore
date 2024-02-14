@@ -1,8 +1,0 @@
-.DS_store
-node_modules
-*.txt
-
-.env
-
-# Ignora archivos de configuración SASS
-.sass-cache
