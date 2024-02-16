@@ -1,4 +1,6 @@
-POST http://localhost:3000/task
+@uri_task = http://localhost:3000
+
+POST {{uri_task}}/task
 Content-Type: application/json
 
 {
@@ -7,13 +9,22 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:3000/task
+GET {{uri_task}}/task
 
 ###
-PATCH http://localhost:3000/task/65cf8358cbf9fefae26fcee2
+PATCH {{uri_task}}/task/65cf8358cbf9fefae26fcee2
 Content-Type: application/json
 
 {
     "title": "Tarea modificandose",
     "text": "Esta tarea es para eliminar"
+}
+
+###n
+POST {{uri_task}}/signup
+Content-Type: application/json
+
+{
+    "email": "newuser@hotmail.com",
+    "password": "a1234567a"
 }

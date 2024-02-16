@@ -4,9 +4,12 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
+const userRoutes = require('./routes/user-routes');
 const taskRoutes = require('./routes/task-routes');
 
 app.use(bodyParser.json());
+
+app.use(userRoutes);
 app.use(taskRoutes);
 
 mongoose.connect(
