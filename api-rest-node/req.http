@@ -1,0 +1,10 @@
+POST http://localhost:3000/task
+Content-Type: application/json
+
+{
+    "title": "Tarea para eliminar",
+    "text": "Esta tarea es para eliminar"
+}
+
+###
+GET http://localhost:3000/task
