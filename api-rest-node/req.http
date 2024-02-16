@@ -28,3 +28,12 @@ Content-Type: application/json
     "email": "newuser@hotmail.com",
     "password": "a1234567a"
 }
+
+###
+POST {{uri_task}}/login
+Content-Type: application/json
+
+{
+    "email": "newuser@hotmail.com",
+    "password": "a1234567a"
+}

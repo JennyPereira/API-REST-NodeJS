@@ -62,4 +62,33 @@ const createUser = async (req, res, next) => {
         .json({ message: "Usuario creado", user: savedUser });
 }
 
+const verifyUser = async (req, res, next) => {
+    const email = req.body.email;
+    const password = req.body.password;
+
+    try {
+        verifyCredentials(email, password);
+    } catch (error) {
+        return next(error);
+    }
+
+    let existingUser;
+    try {
+        existingUser = await User.findOne({ email: email });
+    } catch (error) {
+        const err = new Error("Algo ha ocurrido en el logueo de usuario");
+        return next(err);
+    }
+
+    if (existingUser.password !== password) {
+        const error = new Error("Contraseña incorrecta");
+        return next(error);
+    }
+
+    res
+        .status(200)
+        .json({ message: "Usuario logueado", userId: existingUser.id });
+}
+
 exports.createUser = createUser;
+exports.verifyUser = verifyUser;
