@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const { createError, createandThrowError } = require('../helpers/error');
 
 const verifyCredentials = (email, password) => {
     //False, "     ", jenn, False, "" 
@@ -7,7 +8,7 @@ const verifyCredentials = (email, password) => {
         || !email.includes('@')
         || !password
         || password.trim().length === 0) {
-        throw new Error("Credenciles incorrectas");
+        createandThrowError("Credenciales incorrectos", 422);
     }
 }
 
@@ -18,11 +19,14 @@ const chechUserExistence = async (email) => {
     try {
         existingUser = await User.findOne({ email: email });
     } catch (error) {
-        throw new Error("Algo ha sucedido mal al checkear Usuario");
+        createandThrowError("Error al encontrar email", 500);
     }
 
+    //json
+    //undenined
+
     if (existingUser) {
-        throw new Error("El usuario ya existe");
+        createandThrowError("El usuario ya existe", 422);
     }
 }
 
@@ -33,15 +37,13 @@ const createUser = async (req, res, next) => {
     try {
         verifyCredentials(email, password);
     } catch (error) {
-        const err = new Error("Credenciles incorrectas");
-        return next(err);
+        return next(error);
     }
 
     try {
         await chechUserExistence(email);
     } catch (error) {
-        const err = new Error("Usuario existente");
-        return next(err);
+        return next(error);
     }
 
     const newUser = new User({
@@ -53,7 +55,7 @@ const createUser = async (req, res, next) => {
     try {
         savedUser = await newUser.save();
     } catch (error) {
-        const err = new Error("Algo ha ocurrido al crear un nuevo usuario");
+        const err = new createError("Algo ha ocurrido al crear un nuevo usuario", 500);
         return next(err);
     }
 
@@ -76,12 +78,12 @@ const verifyUser = async (req, res, next) => {
     try {
         existingUser = await User.findOne({ email: email });
     } catch (error) {
-        const err = new Error("Algo ha ocurrido en el logueo de usuario");
+        const err = createError("Ha fallado en verificar un usario", 500);
         return next(err);
     }
 
     if (existingUser.password !== password) {
-        const error = new Error("Contraseña incorrecta");
+        const error = createError("Email o password incorrectos", 422);
         return next(error);
     }
 

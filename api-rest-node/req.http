@@ -4,8 +4,8 @@ POST {{uri_task}}/task
 Content-Type: application/json
 
 {
-    "title": "Tarea para eliminar",
-    "text": "Esta tarea es para eliminar"
+    "title": "Tarea 1",
+    "text": "Vinculación con User"
 }
 
 ###
@@ -26,7 +26,7 @@ Content-Type: application/json
 
 {
     "email": "newuser@hotmail.com",
-    "password": "a1234567a"
+    "password": ""
 }
 
 ###
