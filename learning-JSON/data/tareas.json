@@ -1,0 +1,17 @@
+[
+    {
+        "id": 1,
+        "title": "Limpiar auto",
+        "text": "Sabado por la mañana"
+    },
+    {
+        "id": 2,
+        "title": "Ir de compras",
+        "text": "Domingo por la tarde"
+    },
+    {
+        "id": 3,
+        "title": "Comprar curso de Udemy",
+        "text": "Jueves en la tarde"
+    }
+]
