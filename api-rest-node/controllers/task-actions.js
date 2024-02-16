@@ -38,5 +38,32 @@ const readTask = async (req, res, next) => {
         .json({ tasks: tasks });
 }
 
+const updateTask = async (req, res, next) => {
+    const task_id = req.params.id;
+    let task;
+
+    try {
+        task = await Task.findOne({ _id: task_id });
+    } catch (error) {
+        const err = new Error("Algo ha ocurrido al leer tareas");
+        return next(err);
+    }
+
+    const filter = { _id: task_id };
+
+    let taskUpdated;
+    try {
+        taskUpdated = await Task.findByIdAndUpdate(filter, req.body, { new: true, runValidators: true });
+    } catch (error) {
+        const err = new Error("Algo ha ocurrido al modificar tarea");
+        return next(err);
+    }
+
+    res
+        .status(200)
+        .json({ message: "Tarea modificada", task: taskUpdated });
+}
+
 exports.createTask = createTask;
 exports.readTask = readTask;
+exports.updateTask = updateTask;

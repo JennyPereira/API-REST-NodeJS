@@ -8,3 +8,12 @@ Content-Type: application/json
 
 ###
 GET http://localhost:3000/task
+
+###
+PATCH http://localhost:3000/task/65cf8358cbf9fefae26fcee2
+Content-Type: application/json
+
+{
+    "title": "Tarea modificandose",
+    "text": "Esta tarea es para eliminar"
+}
