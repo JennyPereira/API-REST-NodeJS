@@ -29,10 +29,12 @@ const createTask = async (req, res, next) => {
 }
 
 const readTask = async (req, res, next) => {
+    const user = req.userId;
+
     let tasks;
 
     try {
-        tasks = await Task.find({});
+        tasks = await Task.find({ user: user });
     } catch (error) {
         const err = createError("Algo ha ocurrido al momento de obtener tareas", 500);
         return next(err);
@@ -50,7 +52,7 @@ const updateTask = async (req, res, next) => {
     try {
         task = await Task.findOne({ _id: task_id });
     } catch (error) {
-        const err = createError("No ha encontrado tarea", 403);
+        const err = createError("No ha encontrado tarea", 500);
         return next(err);
     }
 

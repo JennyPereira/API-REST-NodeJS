@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const auth = require('./auth');
 const { createError, createandThrowError } = require('../helpers/error');
 
 const verifyCredentials = (email, password) => {
@@ -8,7 +9,7 @@ const verifyCredentials = (email, password) => {
         || !email.includes('@')
         || !password
         || password.trim().length === 0) {
-        createandThrowError("Credenciales incorrectos", 422);
+        createandThrowError("Credenciales incorrectos", 422); //datos inválidos o semántica incorrecta
     }
 }
 
@@ -26,7 +27,7 @@ const chechUserExistence = async (email) => {
     //undenined
 
     if (existingUser) {
-        createandThrowError("El usuario ya existe", 422);
+        createandThrowError("El usuario ya existe", 422); //la entidad inválida - dato inválido, o semántica incorrecta
     }
 }
 
@@ -83,13 +84,21 @@ const verifyUser = async (req, res, next) => {
     }
 
     if (existingUser.password !== password) {
-        const error = createError("Email o password incorrectos", 422);
+        const error = createError("Email o password incorrectos", 401); //no autorizado - 422
         return next(error);
+    }
+
+    let token;
+    try {
+        token = auth.createToken(existingUser.id);
+    } catch (error) {
+        const err = createError("Algo ha salido mal durante la creación de token", 500);
+        return next(err);
     }
 
     res
         .status(200)
-        .json({ message: "Usuario logueado", userId: existingUser.id });
+        .json({ message: "Usuario logueado", token: token, userId: existingUser.id });
 }
 
 exports.createUser = createUser;

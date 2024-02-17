@@ -6,11 +6,12 @@ const app = express();
 
 const userRoutes = require('./routes/user-routes');
 const taskRoutes = require('./routes/task-routes');
+const verifyUser = require('./middleware/user-auth');
 
 app.use(bodyParser.json());
 
 app.use(userRoutes);
-app.use(taskRoutes);
+app.use(verifyUser, taskRoutes);
 
 app.use((err, req, res, next) => {
     let code = 500;
