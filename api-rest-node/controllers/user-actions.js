@@ -69,8 +69,6 @@ const verifyUser = async (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
 
-    console.log(email);
-
     try {
         verifyCredentials(email, password);
     } catch (error) {
@@ -84,6 +82,8 @@ const verifyUser = async (req, res, next) => {
         const err = createError("Ha fallado en verificar un usario", 500);
         return next(err);
     }
+
+    console.log(existingUser);
 
     if (existingUser.password !== password) {
         const error = createError("Email o password incorrectos", 401); //no autorizado - 422

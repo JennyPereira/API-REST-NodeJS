@@ -47,6 +47,7 @@ const readTask = async (req, res, next) => {
 
 const updateTask = async (req, res, next) => {
     const task_id = req.params.id;
+    const user = req.userId;
     let task;
 
     try {
@@ -54,6 +55,11 @@ const updateTask = async (req, res, next) => {
     } catch (error) {
         const err = createError("No ha encontrado tarea", 500);
         return next(err);
+    }
+
+    if (task.user.toString() !== user) {
+        const error = createError("Usuario no autorizado para esta acción", 403);
+        return next(error);
     }
 
     const filter = { _id: task_id };
@@ -71,6 +77,37 @@ const updateTask = async (req, res, next) => {
         .json({ message: "Tarea modificada", task: taskUpdated });
 }
 
+const deleteTask = async (req, res, next) => {
+    const taskId = req.params.id;
+    const user_id = req.userId;
+
+    let task;
+
+    try {
+        task = await Task.findOne({ _id: taskId });
+    } catch (error) {
+        const err = createError("Algo ha ocurrido mal", 500);
+        return next(err);
+    }
+
+    if (task.user.toString() != user_id) {
+        const error = createError("Usuario no autorizado para esta acción", 403);
+        return next(error);
+    }
+
+    try {
+        await Task.deleteOne({ _id: taskId });
+    } catch (error) {
+        const err = createError("Algo ha salido mal", 500);
+        return next(error);
+    }
+
+    res
+        .status(200)
+        .json({ message: "Elemento eliminado" })
+}
+
 exports.createTask = createTask;
 exports.readTask = readTask;
 exports.updateTask = updateTask;
+exports.deleteTask = deleteTask;

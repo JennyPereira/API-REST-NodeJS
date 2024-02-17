@@ -21,7 +21,7 @@ Content-Type: application/json
 
 ###
 @access_token = {{token.response.body.token}}
-@id_task = xxxx
+@id_task = 65d0dc62fac7c33ca537e10d
 
 ###
 GET {{uri_task}}/task
@@ -33,20 +33,23 @@ Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
 {
-    "title": "Tarea con JWT",
+    "title": "NUEVO: Tarea con JWT",
     "text": "Mi primera tarea colocando JWT"
 }
 
 ###
-PATCH {{uri_task}}/task/65cf8358cbf9fefae26fcee2
+PATCH {{uri_task}}/task/{{id_task}}
 Content-Type: application/json
+Authorization: Bearer {{access_token}}
 
 {
-    "title": "Tarea de prueba",
-    "text": "Esta tarea es para eliminar"
+    "title": "¡MODIFICADO! Tarea con JWT",
+    "text": "Mi primera tarea colocando JWT"
 }
 
-
+###
+DELETE {{uri_task}}/task/65d0dc62fac7c33ca537e10d
+Authorization: Bearer {{access_token}}
 
 
 
