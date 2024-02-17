@@ -1,26 +1,5 @@
 @uri_task = http://localhost:3000
 
-POST {{uri_task}}/task
-Content-Type: application/json
-
-{
-    "title": "Tarea 1",
-    "text": "Vinculación con User"
-}
-
-###
-GET {{uri_task}}/task
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2NWNmYmZmYjdhYmQ1ZTllZTRhMDM4YmUiLCJpYXQiOjE3MDgxODAxMzEsImV4cCI6MTcwODE4MzczMX0.hF3z6z0Ngf78U7gdhOn2-8REQhx07p7FN5V_T6KekgY
-
-###
-PATCH {{uri_task}}/task/65cf8358cbf9fefae26fcee2
-Content-Type: application/json
-
-{
-    "title": "Tarea de prueba",
-    "text": "Esta tarea es para eliminar"
-}
-
 ###n
 POST {{uri_task}}/signup
 Content-Type: application/json
@@ -31,6 +10,7 @@ Content-Type: application/json
 }
 
 ###
+# @name token
 POST {{uri_task}}/login
 Content-Type: application/json
 
@@ -38,5 +18,36 @@ Content-Type: application/json
     "email": "newuser@hotmail.com",
     "password": "a1234567a"
 }
+
+###
+@access_token = {{token.response.body.token}}
+@id_task = xxxx
+
+###
+GET {{uri_task}}/task
+Authorization: Bearer {{access_token}}
+
+###
+POST {{uri_task}}/task
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+    "title": "Tarea con JWT",
+    "text": "Mi primera tarea colocando JWT"
+}
+
+###
+PATCH {{uri_task}}/task/65cf8358cbf9fefae26fcee2
+Content-Type: application/json
+
+{
+    "title": "Tarea de prueba",
+    "text": "Esta tarea es para eliminar"
+}
+
+
+
+
 
 ###

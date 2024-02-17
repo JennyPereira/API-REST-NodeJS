@@ -7,7 +7,7 @@ const Task = require('../models/task');
 const createTask = async (req, res, next) => {
     const title = req.body.title;
     const text = req.body.text;
-    const user = "65cfbcaf6b6d1c33e171e67b";
+    const user = req.userId;
 
     let taskCreated;
     const newTask = new Task({

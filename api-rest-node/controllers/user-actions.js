@@ -69,6 +69,8 @@ const verifyUser = async (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
 
+    console.log(email);
+
     try {
         verifyCredentials(email, password);
     } catch (error) {
