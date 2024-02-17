@@ -1,0 +1,39 @@
+@uri_task = http://localhost:3000
+
+POST {{uri_task}}/task
+Content-Type: application/json
+
+{
+    "title": "Tarea 1",
+    "text": "Vinculación con User"
+}
+
+###
+GET {{uri_task}}/task
+
+###
+PATCH {{uri_task}}/task/65cf8358cbf9fefae26fcee2
+Content-Type: application/json
+
+{
+    "title": "Tarea modificandose",
+    "text": "Esta tarea es para eliminar"
+}
+
+###n
+POST {{uri_task}}/signup
+Content-Type: application/json
+
+{
+    "email": "newuser@hotmail.com",
+    "password": ""
+}
+
+###
+POST {{uri_task}}/login
+Content-Type: application/json
+
+{
+    "email": "newuser@hotmail.com",
+    "password": "a1234567a"
+}
