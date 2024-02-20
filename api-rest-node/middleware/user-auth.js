@@ -27,7 +27,7 @@ const verifyUser = (req, res, next) => {
 
     let decoded;
     try {
-        decoded = jwt.verify(token, "shouldverysecret");
+        decoded = jwt.verify(token, process.env.TOKEN_KEY);
     } catch (error) {
         const err = createError("Token inválido", 401);
         return next(err);

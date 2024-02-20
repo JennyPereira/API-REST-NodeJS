@@ -1,8 +1,10 @@
 const express = require('express');
+require('dotenv').config();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
 const app = express();
+
 
 const userRoutes = require('./routes/user-routes');
 const taskRoutes = require('./routes/task-routes');
@@ -32,7 +34,7 @@ app.use((err, req, res, next) => {
 });
 
 mongoose.connect(
-    "mongodb+srv://jenn:CUys7pYnw-J3G2!@personal-db.n9edusg.mongodb.net/"
+    process.env.MONGO_CONNECTION_URI
 ).then(() => {
     app.listen(3000)
 }).catch(err => {

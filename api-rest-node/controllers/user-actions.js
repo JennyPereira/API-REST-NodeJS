@@ -83,8 +83,6 @@ const verifyUser = async (req, res, next) => {
         return next(err);
     }
 
-    console.log(existingUser);
-
     if (existingUser.password !== password) {
         const error = createError("Email o password incorrectos", 401); //no autorizado - 422
         return next(error);
